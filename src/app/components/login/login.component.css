@@ -1,0 +1,9 @@
+#formWrapper {
+   width: 300px;
+   margin: 20px auto auto auto;
+   text-align: center;
+}
+
+button {
+   margin: 15px;
+}
