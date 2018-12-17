@@ -3,16 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { ChatlistComponent } from './chatlist/chatlist.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
+  declarations: [ // components
+    AppComponent,
+    LoginComponent,
+    ChatlistComponent,
+    ChatComponent
   ],
-  imports: [
+  imports: [ // modules
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [], // services
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { LoginComponent } from './login/login.component';
+import { ChatlistComponent } from './chatlist/chatlist.component';
+import { ChatComponent } from './chat/chat.component';
+
+const routes: Routes = [
+  {path: '', component: LoginComponent},
+  {path: 'chatlist', component: ChatlistComponent},
+  {path: 'chat', component: ChatComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
