@@ -6,9 +6,9 @@ import { ChatlistComponent } from './components/chatlist/chatlist.component';
 import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'chatlist', component: ChatlistComponent},
-  {path: 'chat', component: ChatComponent}
+  {path: '', pathMatch: 'full', component: LoginComponent},
+  {path: 'chatlist', pathMatch: 'full', component: ChatlistComponent},
+  {path: 'chat/:friendId', pathMatch: 'full', component: ChatComponent}
 ];
 
 @NgModule({

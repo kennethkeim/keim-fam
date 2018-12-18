@@ -1,5 +1,6 @@
-<p>
-   CHAT LIST<br>
-   <a routerLink="/">Home</a><br>
-   <a routerLink="/chat">Chats</a><br>
-</p>
+<div class="container">
+   <a *ngFor="let friend of friends" routerLink="/chat/{{friend.email}}" class="row justify-content-between chatListItem">
+      <span class="col-auto name">{{ friend.name }}</span>
+      <span class="col-auto latestMessage"><small>{{ friend.latestMessage }}</small></span>
+   </a>
+</div>

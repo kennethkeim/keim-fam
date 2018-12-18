@@ -1,0 +1,13 @@
+.chatListItem {
+   height: 40px;
+   padding-top: 5px;
+   border-bottom: 1px solid #e8e8e8;
+}
+
+.name {
+   font-size: .8rem;
+}
+
+.latestMessage {
+   font-size: .9rem;
+}

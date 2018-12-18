@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  friendId: string;
 
-  constructor() { }
+  constructor(route: ActivatedRoute) {
+    this.friendId = route.params['_value'].friendId;
+   }
 
   ngOnInit() {
   }
