@@ -2,27 +2,25 @@
    <div id="formWrapper">
 
       <h1>{{ isLoggingIn ? 'Log In' : 'Sign Up' }}</h1>
-      <form action="nowhere" method="POST">
-         <div>
-            <label for="email">Email</label><br>
-            <input type="email" name="email" id="email">
-         </div>
 
-         <div [hidden]="isLoggingIn">
-            <label for="name">Name</label><br>
-            <input type="text" name="name" id="name">
-         </div>
+      <div>
+         <label for="email">Email</label><br>
+         <input type="email" name="email" id="email">
+      </div>
 
-         <div>
-            <label for="password">Password</label><br>
-            <input type="password" name="password" id="password">
-         </div>
+      <div [hidden]="isLoggingIn">
+         <label for="name">Name</label><br>
+         <input type="text" name="name" id="name">
+      </div>
 
-         <div>
-            <button type="submit" class="btn btn-sm btn-primary">{{ isLoggingIn ? 'Log In' : 'Sign Up' }}</button>
-         </div>
+      <div>
+         <label for="password">Password</label><br>
+         <input type="password" name="password" id="password">
+      </div>
 
-      </form>
+      <div>
+         <button type="button" class="btn btn-sm btn-primary" (click)="submit()">{{ isLoggingIn ? 'Log In' : 'Sign Up' }}</button>
+      </div>
 
       <div>
          <button type="button" (click)="toggleDisplay()" class="btn btn-sm btn-secondary">{{ isLoggingIn ? 'Go to sign up page' : 'Back to login'}}</button>
