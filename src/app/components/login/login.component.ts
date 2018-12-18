@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
 
@@ -12,7 +13,10 @@ export class LoginComponent implements OnInit {
    isLoggingIn: boolean = true;
    user = new User("Kenneth", "ken@email.com", "lamepass");
 
-   constructor(private userService: UserService) { }
+   constructor(
+      private userService: UserService,
+      private router: Router
+      ) { }
 
    ngOnInit() {
    }
@@ -32,11 +36,13 @@ export class LoginComponent implements OnInit {
    private register(user: User) {
       let msg = this.userService.register(user);
       console.log(msg);
+      this.router.navigate(['/chatlist']);
    }
 
    private login(user: User) {
       let msg = this.userService.login(user);
       console.log(msg);
+      this.router.navigate(['/chatlist']);
    }
 
 }
