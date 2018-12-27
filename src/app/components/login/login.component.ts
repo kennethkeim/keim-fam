@@ -34,15 +34,21 @@ export class LoginComponent implements OnInit {
    }
 
    private register(user: User) {
-      let msg = this.userService.register(user);
-      console.log(msg);
-      this.router.navigate(['/chatlist']);
+      this.userService.register(user)
+      .subscribe((result) => {
+         if (result.isLoggedIn == "true") this.router.navigate(['/chatlist']);
+      }, (err) => {
+         console.log(err);
+      });
    }
 
    private login(user: User) {
-      let msg = this.userService.login(user);
-      console.log(msg);
-      this.router.navigate(['/chatlist']);
+      this.userService.login(user)
+      .subscribe((result) => {
+         if (result.isLoggedIn == "true") this.router.navigate(['/chatlist']);
+      }, (err) => {
+         console.log(err);
+      });
    }
 
 }
