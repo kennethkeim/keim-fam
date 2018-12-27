@@ -5,17 +5,12 @@
 
       <div>
          <label for="email">Email</label><br>
-         <input type="email" name="email" id="email" [(value)]="user.email">
-      </div>
-
-      <div [hidden]="isLoggingIn">
-         <label for="name">Name</label><br>
-         <input type="text" name="name" id="name" [(value)]="user.name">
+         <input type="email" name="email" id="email" [(ngModel)]="user.email">
       </div>
 
       <div>
          <label for="password">Password</label><br>
-         <input type="password" name="password" id="password" [(value)]="user.password">
+         <input type="password" name="password" id="password" [(ngModel)]="user.password">
       </div>
 
       <div>

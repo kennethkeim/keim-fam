@@ -24,5 +24,9 @@ export class UserService {
    public register(user: User) {
       return this.http.post(this.serverUrl + '/register', user, options);
    }
+
+   public logout() {
+      return this.http.post(this.serverUrl + '/logout', undefined, options);
+   }
 }
 

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
+import { Check } from '../../shared/models/check';
+
+
 
 @Component({
    selector: 'app-login',
@@ -11,18 +14,18 @@ import { User } from '../../shared/models/user';
 })
 export class LoginComponent implements OnInit {
    isLoggingIn: boolean = true;
-   user = new User("Kenneth", "ken@email.com", "lamepass");
+   user: User = { email: "", password: "" };
 
    constructor(
       private userService: UserService,
       private router: Router
       ) { }
 
-   ngOnInit() {
-   }
+   ngOnInit() { }
 
    public toggleDisplay() {
       this.isLoggingIn = !this.isLoggingIn;
+      console.log(this.user);
    }
 
    public submit() {
@@ -35,8 +38,11 @@ export class LoginComponent implements OnInit {
 
    private register(user: User) {
       this.userService.register(user)
-      .subscribe((result) => {
-         if (result.isLoggedIn == "true") this.router.navigate(['/chatlist']);
+      .subscribe((result: Check) => {
+         if (result.isLoggedIn == "true") {
+            console.log('You are registered!');
+            this.router.navigate(['/chatlist']);
+         } else console.log("couldn't register you");
       }, (err) => {
          console.log(err);
       });
@@ -44,8 +50,11 @@ export class LoginComponent implements OnInit {
 
    private login(user: User) {
       this.userService.login(user)
-      .subscribe((result) => {
-         if (result.isLoggedIn == "true") this.router.navigate(['/chatlist']);
+      .subscribe((result: Check) => {
+         if (result.isLoggedIn == "true") {
+            console.log('You are logged in!');
+            this.router.navigate(['/chatlist']);
+         } else console.log("couldn't log you in");
       }, (err) => {
          console.log(err);
       });
