@@ -25,8 +25,8 @@ export class UserService {
       return this.http.post(this.serverUrl + '/register', user, options);
    }
 
-   public logout() {
-      return this.http.post(this.serverUrl + '/logout', undefined, options);
-   }
+   // public logout() {
+   //    return this.http.post(this.serverUrl + '/logout', undefined, options);
+   // }
 }
 

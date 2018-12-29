@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../../shared/services/user.service';
+
 import { ChatService } from '../../shared/services/chat.service';
 import { Check } from '../../shared/models/check';
 import { Friend } from '../../shared/models/friend';
@@ -13,13 +13,12 @@ import { Friend } from '../../shared/models/friend';
    selector: 'app-chatlist',
    templateUrl: './chatlist.component.html',
    styleUrls: ['./chatlist.component.css'],
-   providers: [UserService, ChatService]
+   providers: [ChatService]
 })
 export class ChatlistComponent implements OnInit {
    friends: Friend[];
 
    constructor(
-      private userService: UserService,
       private chatService: ChatService,
       private router: Router
       ) {}
@@ -29,13 +28,9 @@ export class ChatlistComponent implements OnInit {
    }
 
    public logout() {
-      this.userService.logout()
-      .subscribe(() => {
-         console.log('logged you out');
-         this.router.navigate(['/']);
-      }, (err) => {
-         console.log(err);
-      });
+      localStorage.removeItem('JWT');
+      localStorage.removeItem('expiration');
+      this.router.navigate(['/']);
    }
 
    private getFriends() {
@@ -43,8 +38,7 @@ export class ChatlistComponent implements OnInit {
       .subscribe((result: Friend[]) => {
          this.friends = result;
       }, (err) => {
-         console.log('there was an error retrieving your data.');
-         console.log(err);
+         console.log(`${err.status} ${err.statusText}: ${err.error}`);
       });
    }
 

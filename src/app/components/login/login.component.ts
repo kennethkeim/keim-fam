@@ -4,7 +4,7 @@ import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
 import { Check } from '../../shared/models/check';
 
-
+import * as moment from 'moment';
 
 @Component({
    selector: 'app-login',
@@ -37,22 +37,45 @@ export class LoginComponent implements OnInit {
 
    private register(user: User) {
       this.userService.register(user)
-      .subscribe(() => {
-         console.log('You are registered!');
+      .subscribe((res) => {
+         console.log(res);
          // this.router.navigate(['/chatlist']);
       }, (err) => {
-         console.log(err);
+         console.log(`${err.status} ${err.statusText}: ${err.error}`);
       });
    }
 
    private login(user: User) {
       this.userService.login(user)
-      .subscribe(() => {
-         console.log('You are logged in!');
+      .subscribe((res) => {
+         console.log("you should be logged in now");
+         this.setSession(res);
          this.router.navigate(['/chatlist']);
       }, (err) => {
-         console.log(err);
+         console.log(`${err.status} ${err.statusText}: ${err.error}`);
       });
+   }
+
+   private setSession(authResult) {
+      const expiresAt = moment().add(Number(authResult.expiresIn), 'second');
+
+      localStorage.setItem('JWT', authResult.token);
+      localStorage.setItem('expiration', JSON.stringify(expiresAt.valueOf()) );
+   }
+
+
+   // these methods can be used to check if the user is logged in or not
+   public isLoggedIn() {
+      return moment().isBefore(this.getExpiration());
+   }
+
+   isLoggedOut() {
+      return !this.isLoggedIn();
+   }
+
+   getExpiration() {
+      const expiration = localStorage.getItem('expiration');
+      return moment(JSON.parse(expiration));
    }
 
 }
