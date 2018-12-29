@@ -30,11 +30,9 @@ export class ChatlistComponent implements OnInit {
 
    public logout() {
       this.userService.logout()
-      .subscribe((result: Check) => {
-         if (result.isLoggedIn == 'false') {
-            console.log('logged you out');
-            this.router.navigate(['/']);
-         } else console.log('could not log you out.');
+      .subscribe(() => {
+         console.log('logged you out');
+         this.router.navigate(['/']);
       }, (err) => {
          console.log(err);
       });

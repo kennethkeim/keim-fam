@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
 
    public toggleDisplay() {
       this.isLoggingIn = !this.isLoggingIn;
-      console.log(this.user);
    }
 
    public submit() {
@@ -38,11 +37,9 @@ export class LoginComponent implements OnInit {
 
    private register(user: User) {
       this.userService.register(user)
-      .subscribe((result: Check) => {
-         if (result.isLoggedIn == "true") {
-            console.log('You are registered!');
-            this.router.navigate(['/chatlist']);
-         } else console.log("couldn't register you");
+      .subscribe(() => {
+         console.log('You are registered!');
+         // this.router.navigate(['/chatlist']);
       }, (err) => {
          console.log(err);
       });
@@ -50,11 +47,9 @@ export class LoginComponent implements OnInit {
 
    private login(user: User) {
       this.userService.login(user)
-      .subscribe((result: Check) => {
-         if (result.isLoggedIn == "true") {
-            console.log('You are logged in!');
-            this.router.navigate(['/chatlist']);
-         } else console.log("couldn't log you in");
+      .subscribe(() => {
+         console.log('You are logged in!');
+         this.router.navigate(['/chatlist']);
       }, (err) => {
          console.log(err);
       });
