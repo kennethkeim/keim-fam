@@ -10,8 +10,13 @@ export class ChatService {
 
    constructor(private http: HttpClient) { }
 
+   // get list of friends for chatlist component
    public getFriends() {
-      return this.http.get(this.serverUrl, {withCredentials: true});
+      return this.http.get(this.serverUrl);
+   }
+
+   public startServerSocket() {
+      return this.http.get(this.serverUrl + '/chat');
    }
 
 }

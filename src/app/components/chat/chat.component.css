@@ -1,4 +1,6 @@
 #formWrapper {
    width: 400px;
    margin: 20px auto auto auto;
+   border: 2px solid #337ab7;
+   text-align: center;  
 }
