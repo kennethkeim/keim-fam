@@ -11,3 +11,12 @@
 .latestMessage {
    font-size: .9rem;
 }
+
+button {
+   margin-top: 20px;
+}
+
+#formWrapper {
+   width: 400px;
+   margin: 20px auto auto auto;
+}

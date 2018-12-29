@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 
 import { ChatService } from '../../shared/services/chat.service';
-import { Check } from '../../shared/models/check';
+import { UtilsService } from '../../shared/services/utils.service';
 import { Friend } from '../../shared/models/friend';
 
 
@@ -13,18 +13,25 @@ import { Friend } from '../../shared/models/friend';
    selector: 'app-chatlist',
    templateUrl: './chatlist.component.html',
    styleUrls: ['./chatlist.component.css'],
-   providers: [ChatService]
+   providers: [ChatService, UtilsService]
 })
 export class ChatlistComponent implements OnInit {
    friends: Friend[];
 
    constructor(
       private chatService: ChatService,
+      private utilsService: UtilsService,
       private router: Router
       ) {}
 
    ngOnInit() {
-      this.getFriends();
+
+      if (this.isLoggedIn()) {
+         this.getFriends();
+      } else {
+         // redirect to login
+         this.router.navigate(['/']);
+      }
    }
 
    public logout() {
@@ -40,6 +47,10 @@ export class ChatlistComponent implements OnInit {
       }, (err) => {
          console.log(`${err.status} ${err.statusText}: ${err.error}`);
       });
+   }
+
+   private isLoggedIn() {
+      return this.utilsService.isLoggedIn();
    }
 
 }

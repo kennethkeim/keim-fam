@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
-import { Check } from '../../shared/models/check';
 
 import * as moment from 'moment';
 
@@ -57,25 +56,10 @@ export class LoginComponent implements OnInit {
    }
 
    private setSession(authResult) {
-      const expiresAt = moment().add(Number(authResult.expiresIn), 'second');
+      const expiresAt = moment().add(Number(authResult.expiresIn), 'seconds');
 
       localStorage.setItem('JWT', authResult.token);
       localStorage.setItem('expiration', JSON.stringify(expiresAt.valueOf()) );
-   }
-
-
-   // these methods can be used to check if the user is logged in or not
-   public isLoggedIn() {
-      return moment().isBefore(this.getExpiration());
-   }
-
-   isLoggedOut() {
-      return !this.isLoggedIn();
-   }
-
-   getExpiration() {
-      const expiration = localStorage.getItem('expiration');
-      return moment(JSON.parse(expiration));
    }
 
 }

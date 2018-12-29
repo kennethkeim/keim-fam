@@ -1,8 +1,11 @@
 <div class="container">
-   <a *ngFor="let friend of friends" routerLink="/chat/{{friend.email}}" class="row justify-content-between chatListItem">
-      <span class="col-auto name">{{ friend.name }}</span>
-      <span class="col-auto latestMessage"><small>{{ friend.latestMessage }}</small></span>
-   </a>
+   <div id="formWrapper">
+      <h2>Chat List</h2>
+      <a *ngFor="let friend of friends" routerLink="/chat/{{friend.email}}" class="row justify-content-between chatListItem">
+         <span class="col-auto name">{{ friend.name }}</span>
+         <span class="col-auto latestMessage"><small>{{ friend.latestMessage }}</small></span>
+      </a>
 
-   <button type="button" (click)="logout()" class="btn btn-sm btn-primary">Log Out</button>
+      <button type="button" (click)="logout()" class="btn btn-sm btn-primary">Log Out</button>
+   </div>
 </div>
