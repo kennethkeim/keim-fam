@@ -10,7 +10,6 @@ import { UtilsService } from '../../shared/services/utils.service';
 
 // yes this is temporary
 interface User {
-  name: string;
   email: string;
 }
 
@@ -39,10 +38,7 @@ export class ChatComponent implements OnInit {
 
   // eventually this needs to be the currently logged in user
   // which we'd prolly get from the jwt
-  user: User = {
-    name: "Kenneth",
-    email: "kenneth@email.com"
-  };
+  user: User = { email: '' };
 
   // this might a two way data bound object that stores the message that's currently being typed
   messageContent: string;
@@ -77,9 +73,13 @@ export class ChatComponent implements OnInit {
 
     this.ioConnection = this.socketService.onMessage()
     .subscribe((message: Message) => {
-      console.log(message);
       this.messages.push(message);
     });
+
+    this.ioConnection = this.socketService.onSetuser()
+      .subscribe((userId: any) => {
+        this.user.email = userId;
+      });
 
   }
 
@@ -89,7 +89,7 @@ export class ChatComponent implements OnInit {
     if (!message) return;
 
     this.socketService.send({
-      from: this.user.name,
+      from: this.user.email,
       content: message
     });
     this.messageContent = null;

@@ -29,6 +29,10 @@ export class SocketService {
 
    public initSocket() {
       this.socket = socketIo(SERVER_URL);
+
+      this.socket.on('connected', () => {
+         this.authenticate();
+      });
    }
 
    public send(message){
@@ -38,6 +42,19 @@ export class SocketService {
    public onMessage(): Observable<Message> {
       return new Observable<Message>(observer => {
          this.socket.on('message', (data: Message) => observer.next(data));
+      });
+   }
+
+
+   private authenticate() {
+      const token = localStorage.getItem('JWT');
+      if (token) this.socket.emit('authentication', token);
+   }
+
+
+   public onSetuser(): Observable<any> {
+      return new Observable<any>(observer => {
+         this.socket.on('setuser', (userId: any) => observer.next(userId));
       });
    }
 
