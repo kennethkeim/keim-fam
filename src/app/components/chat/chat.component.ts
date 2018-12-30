@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ChatService } from '../../shared/services/chat.service';
 import { SocketService } from '../../shared/services/socket.service';
+import { UtilsService } from '../../shared/services/utils.service';
 
 
 
@@ -30,7 +32,7 @@ interface Message {
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  providers: [ChatService, SocketService]
+  providers: [ChatService, SocketService, UtilsService]
 })
 export class ChatComponent implements OnInit {
   friendId: string;
@@ -50,33 +52,24 @@ export class ChatComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private chatService: ChatService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private utilsService: UtilsService
     ) { }
 
 
 
   // this is probs where we want to init the socket connection
   ngOnInit() {
-    this.friendId = this.route.params['_value'].friendId;
+    if (this.utilsService.isLoggedIn()) {
+      this.friendId = this.route.params['_value'].friendId;
 
-    this.startServerSocket();
+      this.initSocketConnection();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
-
-
-
-  private startServerSocket() {
-    this.chatService.startServerSocket()
-      .subscribe((res) => {
-        console.log(res);
-        this.initSocketConnection();
-      },
-      (err) => {
-        console.error(err);
-      });
-  }
-
-
 
 
   private initSocketConnection() {
@@ -88,15 +81,11 @@ export class ChatComponent implements OnInit {
       this.messages.push(message);
     });
 
-    setTimeout(() => {
-      this.sendMessage("I SENT MESSAGE. I AM BEST!");
-    }, 3000);
-
   }
 
 
 
-  public sendMessage(message: string) {
+  public sendMessage(message: string = this.messageContent) {
     if (!message) return;
 
     this.socketService.send({

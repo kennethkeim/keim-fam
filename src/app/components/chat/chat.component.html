@@ -1,9 +1,14 @@
 
 <div class="container">
    <div id="formWrapper">
-      <h6>Your chat with {{friendId}}</h6>
+      <h6>Your chat with {{ friendId }}</h6>
+         <input type="text" [(ngModel)]="messageContent">
+         <button type="button" class="btn btn-sm btn-primary" (click)="sendMessage()">send</button>
 
-      <div id="messages" [(ngModel)]="messages"></div>
+         <div *ngFor="let message of messages">
+            <span id="from">{{ message.from }}</span>
+            <span id="content">{{ message.content }}</span>
+         </div>
 
    </div>
 </div>
