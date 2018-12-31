@@ -14,7 +14,8 @@ interface User {
 }
 
 interface Message {
-  from: User;
+  from: string;
+  to: string;
   content: any;
 }
 
@@ -73,13 +74,13 @@ export class ChatComponent implements OnInit {
 
     this.ioConnection = this.socketService.onMessage()
     .subscribe((message: Message) => {
-      this.messages.push(message);
+      if (message.from == this.friendId || message.to == this.friendId) this.messages.push(message);
     });
 
     this.ioConnection = this.socketService.onSetuser()
-      .subscribe((userId: any) => {
-        this.user.email = userId;
-      });
+    .subscribe((userId: any) => {
+      this.user.email = userId;
+    });
 
   }
 
@@ -90,6 +91,7 @@ export class ChatComponent implements OnInit {
 
     this.socketService.send({
       from: this.user.email,
+      to: this.friendId,
       content: message
     });
     this.messageContent = null;

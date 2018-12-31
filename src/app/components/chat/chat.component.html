@@ -1,6 +1,7 @@
 
 <div class="container">
    <div id="formWrapper">
+      <p>You are {{ user.email }}</p>
       <h6>Your chat with {{ friendId }}</h6>
          <input type="text" [(ngModel)]="messageContent">
          <button type="button" class="btn btn-sm btn-primary" (click)="sendMessage()">send</button>

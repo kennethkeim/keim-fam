@@ -10,7 +10,8 @@ interface User {
 }
 
 interface Message {
-   from: User;
+   from: string;
+   to: string;
    content: any;
 }
 
@@ -40,8 +41,10 @@ export class SocketService {
    }
 
    public onMessage(): Observable<Message> {
-      return new Observable<Message>(observer => {
-         this.socket.on('message', (data: Message) => observer.next(data));
+      return new Observable<Message>((observer) => {
+         this.socket.on('message', (data: Message) => {
+            observer.next(data);
+         });
       });
    }
 
@@ -53,8 +56,10 @@ export class SocketService {
 
 
    public onSetuser(): Observable<any> {
-      return new Observable<any>(observer => {
-         this.socket.on('setuser', (userId: any) => observer.next(userId));
+      return new Observable<any>((observer) => {
+         this.socket.on('setuser', (userId: any) => {
+            observer.next(userId);
+         });
       });
    }
 
