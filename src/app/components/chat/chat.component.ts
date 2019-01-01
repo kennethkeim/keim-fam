@@ -36,12 +36,7 @@ interface Message {
 })
 export class ChatComponent implements OnInit {
   friendId: string;
-
-  // eventually this needs to be the currently logged in user
-  // which we'd prolly get from the jwt
   user: User = { email: '' };
-
-  // this might a two way data bound object that stores the message that's currently being typed
   messageContent: string;
   ioConnection: any;
   messages: Message[] = [];
@@ -72,14 +67,14 @@ export class ChatComponent implements OnInit {
   private initSocketConnection() {
     this.socketService.initSocket();
 
-    this.ioConnection = this.socketService.onMessage()
-    .subscribe((message: Message) => {
-      if (message.from == this.friendId || message.to == this.friendId) this.messages.push(message);
-    });
-
     this.ioConnection = this.socketService.onSetuser()
     .subscribe((userId: any) => {
       this.user.email = userId;
+    });
+
+    this.ioConnection = this.socketService.onMessage()
+    .subscribe((message: Message) => {
+      if (message.from == this.friendId || message.to == this.friendId) this.messages.push(message);
     });
 
   }
@@ -89,14 +84,16 @@ export class ChatComponent implements OnInit {
   public sendMessage(message: string = this.messageContent) {
     if (!message) return;
 
-    this.socketService.send({
+    const m = {
       from: this.user.email,
       to: this.friendId,
       content: message
-    });
+    };
+
+    this.socketService.send(m);
+    this.messages.push(m);
     this.messageContent = null;
   }
-
 
 
 }

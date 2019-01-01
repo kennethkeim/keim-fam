@@ -32,7 +32,7 @@ export class SocketService {
       this.socket = socketIo(SERVER_URL);
 
       this.socket.on('connected', () => {
-         this.authenticate();
+         this.identify();
       });
    }
 
@@ -49,9 +49,9 @@ export class SocketService {
    }
 
 
-   private authenticate() {
+   private identify() {
       const token = localStorage.getItem('JWT');
-      if (token) this.socket.emit('authentication', token);
+      if (token) this.socket.emit('identification', token);
    }
 
 
