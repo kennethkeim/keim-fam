@@ -6,26 +6,9 @@ import { ChatService } from '../../shared/services/chat.service';
 import { SocketService } from '../../shared/services/socket.service';
 import { UtilsService } from '../../shared/services/utils.service';
 
+import { Me } from '../../shared/models/me';
+import { Message } from '../../shared/models/message';
 
-
-// yes this is temporary
-interface User {
-  email: string;
-}
-
-interface Message {
-  from: string;
-  to: string;
-  content: any;
-}
-
-
-
-
-
-
-// TODO: lock this chat down to a private chat between two people
-// I'm not sure what this means as far as socket connections
 
 
 @Component({
@@ -36,7 +19,7 @@ interface Message {
 })
 export class ChatComponent implements OnInit {
   friendId: string;
-  user: User = { email: '' };
+  me: Me = { email: '' };
   messageContent: string;
   ioConnection: any;
   messages: Message[] = [];
@@ -69,7 +52,7 @@ export class ChatComponent implements OnInit {
 
     this.ioConnection = this.socketService.onSetuser()
     .subscribe((userId: any) => {
-      this.user.email = userId;
+      this.me.email = userId;
     });
 
     this.ioConnection = this.socketService.onMessage()
@@ -85,7 +68,7 @@ export class ChatComponent implements OnInit {
     if (!message) return;
 
     const m = {
-      from: this.user.email,
+      from: this.me.email,
       to: this.friendId,
       content: message
     };

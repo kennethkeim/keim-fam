@@ -3,23 +3,6 @@ import { Observable } from 'rxjs';
 
 
 
-// yes this is temporary
-interface User {
-   name: string;
-   email: string;
-}
-
-interface Message {
-   from: string;
-   to: string;
-   content: any;
-}
-
-
-
-
-
-
 import * as socketIo from 'socket.io-client';
 
 const SERVER_URL = 'http://0.0.0.0:8080';
@@ -40,9 +23,9 @@ export class SocketService {
       this.socket.emit('message', message);
    }
 
-   public onMessage(): Observable<Message> {
-      return new Observable<Message>((observer) => {
-         this.socket.on('message', (data: Message) => {
+   public onMessage(): Observable<any> {
+      return new Observable<any>((observer) => {
+         this.socket.on('message', (data: any) => {
             observer.next(data);
          });
       });
