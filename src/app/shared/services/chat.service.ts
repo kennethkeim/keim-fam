@@ -15,8 +15,4 @@ export class ChatService {
       return this.http.get(this.serverUrl);
    }
 
-   public startServerSocket() {
-      return this.http.get(this.serverUrl + '/chat');
-   }
-
 }

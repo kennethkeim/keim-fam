@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class LoginComponent implements OnInit {
    isLoggingIn: boolean = true;
-   user: User = { email: "", password: "" };
+   user: User = {email: '', password: ''};
 
    constructor(
       private userService: UserService,
